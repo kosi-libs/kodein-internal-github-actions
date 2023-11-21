@@ -1,0 +1,25 @@
+name: "Setup"
+inputs:
+  java-version:
+    default: 17
+  konan:
+    default: 'true'
+runs:
+  using: "composite"
+  steps:
+    - name: Check out
+      uses: actions/checkout@v4
+    - name: Set up JDK Temurin ${{ inputs.java-version }}
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: ${{ inputs.java-version }}
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+    - name: Cached Konan
+      if: ${{ inputs.konan == 'true' }}
+      uses: actions/cache@v3
+      with:
+        path: ~/.konan
+        key: ${{ runner.os }}-konan-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+        restore-keys: ${{ runner.os }}-konan-

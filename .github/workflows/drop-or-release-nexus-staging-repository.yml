@@ -1,0 +1,36 @@
+on:
+  workflow_call:
+    inputs:
+      repository-id:
+        required: true
+        type: string
+      build-upload-result:
+        required: true
+        type: string
+    secrets:
+      SONATYPE_USERNAME:
+        required: true
+      SONATYPE_PASSWORD:
+        required: true
+
+jobs:
+  complete-staging-repository:
+    name: Complete Nexus staging repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discard
+        if: ${{ inputs.build-upload-result != 'success' }}
+        uses: nexus-actions/drop-nexus-staging-repo@v1
+        with:
+          base_url: https://s01.oss.sonatype.org/service/local/
+          username: ${{ secrets.SONATYPE_USERNAME }}
+          password: ${{ secrets.SONATYPE_PASSWORD }}
+          staging_repository_id: ${{ inputs.repository-id }}
+      - name: Release
+        if: ${{ inputs.build-upload-result == 'success' }}
+        uses: nexus-actions/release-nexus-staging-repo@v1
+        with:
+          base_url: https://s01.oss.sonatype.org/service/local/
+          username: ${{ secrets.SONATYPE_USERNAME }}
+          password: ${{ secrets.SONATYPE_PASSWORD }}
+          staging_repository_id: ${{ inputs.repository-id }}
