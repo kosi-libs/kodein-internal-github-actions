@@ -1,0 +1,41 @@
+on:
+  workflow_call:
+    inputs:
+      api-level:
+        type: number
+        default: 34
+      target:
+        type: string
+        default: google_apis
+      ndk:
+        type: string
+        default: 21.3.6528147
+      cmake:
+        type: string
+        default: 3.10.2.4988404
+      arch:
+        type: string
+        default: x86_64 # API 30+ emulators only have x86_64 system images.
+
+jobs:
+  instrumentation-tests:
+    name: Instrumentation tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: kosi-libs/kodein-internal-github-actions/setup@main
+      - name: Enable KVM group perms
+        shell: bash
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Check Android
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ inputs.api-level }}
+          target: ${{ inputs.target }}
+          ndk: ${{ inputs.ndk }}
+          cmake: ${{ inputs.cmake }}
+          arch: ${{ inputs.arch }}
+          script: ./gradlew connectedCheck
