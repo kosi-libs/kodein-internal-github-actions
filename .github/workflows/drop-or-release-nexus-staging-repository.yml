@@ -24,7 +24,7 @@ jobs:
         with:
           base_url: https://s01.oss.sonatype.org/service/local/
           username: ${{ secrets.SONATYPE_USERNAME }}
-          password: ${{ secrets.SONATYPE_PASSWORD }}
+          password: ${{ secrets.SONATYPE_TOKEN_PASSWORD }}
           staging_repository_id: ${{ inputs.repository-id }}
       - name: Release
         if: ${{ inputs.build-upload-result == 'success' }}
@@ -32,5 +32,5 @@ jobs:
         with:
           base_url: https://s01.oss.sonatype.org/service/local/
           username: ${{ secrets.SONATYPE_USERNAME }}
-          password: ${{ secrets.SONATYPE_PASSWORD }}
+          password: ${{ secrets.SONATYPE_TOKEN_PASSWORD }}
           staging_repository_id: ${{ inputs.repository-id }}

@@ -24,6 +24,6 @@ jobs:
         with:
           base_url: https://s01.oss.sonatype.org/service/local/
           username: ${{ secrets.SONATYPE_USERNAME }}
-          password: ${{ secrets.SONATYPE_PASSWORD }}
+          password: ${{ secrets.SONATYPE_TOKEN_PASSWORD }}
           staging_profile_id: ${{ secrets.SONATYPE_PROFILE_ID }}
           description: ${{ github.repository }}/${{ github.workflow }}#${{ github.run_number }}
