@@ -22,7 +22,7 @@ jobs:
         if: ${{ inputs.build-upload-result != 'success' }}
         uses: nexus-actions/drop-nexus-staging-repo@v1
         with:
-          base_url: https://s01.oss.sonatype.org/service/local/
+          base_url: https://ossrh-staging-api.central.sonatype.com/service/local/
           username: ${{ secrets.SONATYPE_TOKEN_USER }}
           password: ${{ secrets.SONATYPE_TOKEN_PASSWORD }}
           staging_repository_id: ${{ inputs.repository-id }}
@@ -30,7 +30,7 @@ jobs:
         if: ${{ inputs.build-upload-result == 'success' }}
         uses: nexus-actions/release-nexus-staging-repo@v1
         with:
-          base_url: https://s01.oss.sonatype.org/service/local/
+          base_url: https://ossrh-staging-api.central.sonatype.com/service/local/
           username: ${{ secrets.SONATYPE_TOKEN_USER }}
           password: ${{ secrets.SONATYPE_TOKEN_PASSWORD }}
           staging_repository_id: ${{ inputs.repository-id }}
