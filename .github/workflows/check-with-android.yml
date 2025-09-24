@@ -3,13 +3,13 @@ on:
     inputs:
       api-level:
         type: number
-        default: 34
+        default: 35
       target:
         type: string
         default: google_apis
       ndk:
         type: string
-        default: 21.3.6528147
+        default: 25.2.9519653
       cmake:
         type: string
         default: 3.10.2.4988404
@@ -21,6 +21,9 @@ jobs:
   instrumentation-tests:
     name: Instrumentation tests
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+        fail-fast: true
     steps:
       - name: Setup
         uses: kosi-libs/kodein-internal-github-actions/setup@main
