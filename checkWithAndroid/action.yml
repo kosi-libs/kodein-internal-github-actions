@@ -1,7 +1,7 @@
 name: "Check with Android"
 runs:
   using: "composite"
-  runs-on: ubuntu-latest
+  runs-on: macOS-latest
   timeout-minutes: 60
   strategy:
       fail-fast: true

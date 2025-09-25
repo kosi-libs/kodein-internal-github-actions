@@ -20,7 +20,7 @@ on:
 jobs:
   instrumentation-tests:
     name: Instrumentation tests
-    runs-on: ubuntu-latest
+    runs-on: macOS-macos
     timeout-minutes: 60
     strategy:
         fail-fast: true
