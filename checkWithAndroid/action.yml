@@ -1,4 +1,9 @@
 name: "Check with Android"
+inputs:
+  gradle-task:
+    description: "Which Gradle convention to use: 'AGP' (./gradlew connectedCheck) or 'KMP' (./gradlew androidConnectedCheck)."
+    required: false
+    default: "KMP"
 runs:
   using: "composite"
   runs-on: macOS-latest
@@ -21,4 +26,4 @@ runs:
         api-level: 35
         ndk: 25.2.9519653
         cmake: 3.10.2.4988404
-        script: ./gradlew connectedCheck
+        script: ./gradlew ${{ inputs.gradle-task == 'AGP' && 'connectedCheck' || 'androidConnectedCheck' }}

@@ -16,11 +16,14 @@ on:
       arch:
         type: string
         default: x86_64 # API 30+ emulators only have x86_64 system images.
+      gradle-task:
+        type: string
+        default: "KMP" # Gradle convention: 'AGP' (./gradlew connectedCheck) or 'KMP' (./gradlew androidConnectedCheck).
 
 jobs:
   instrumentation-tests:
     name: Instrumentation tests
-    runs-on: macOS-macos
+    runs-on: macOS-latest
     timeout-minutes: 60
     strategy:
         fail-fast: true
@@ -41,4 +44,4 @@ jobs:
           ndk: ${{ inputs.ndk }}
           cmake: ${{ inputs.cmake }}
           arch: ${{ inputs.arch }}
-          script: ./gradlew connectedCheck
+          script: ./gradlew ${{ inputs.gradle-task == 'AGP' && 'connectedCheck' || 'androidConnectedCheck' }}
