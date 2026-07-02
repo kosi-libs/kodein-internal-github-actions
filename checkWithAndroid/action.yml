@@ -21,7 +21,7 @@ runs:
         sudo udevadm control --reload-rules
         sudo udevadm trigger --name-match=kvm
     - name: Instrumentation tests
-      uses: reactivecircus/android-emulator-runner@v2
+      uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
       with:
         api-level: 35
         ndk: 25.2.9519653
