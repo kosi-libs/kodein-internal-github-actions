@@ -1,7 +1,7 @@
 name: "Setup"
 inputs:
   java-version:
-    default: 17
+    default: 25
   konan:
     default: 'true'
 runs:
