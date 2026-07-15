@@ -6,10 +6,6 @@ inputs:
     default: "KMP"
 runs:
   using: "composite"
-  runs-on: macOS-latest
-  timeout-minutes: 60
-  strategy:
-      fail-fast: true
   steps:
     - name: Check
       run: ./gradlew check
@@ -24,6 +20,7 @@ runs:
       uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
       with:
         api-level: 35
+        arch: x86_64
         ndk: 25.2.9519653
         cmake: 3.10.2.4988404
         script: ./gradlew ${{ inputs.gradle-task == 'AGP' && 'connectedCheck' || 'androidConnectedCheck' }}
